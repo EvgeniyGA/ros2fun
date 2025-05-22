@@ -7,6 +7,9 @@
   <maintainer email="93276404+EvgeniyGA@users.noreply.github.com">evgeny</maintainer>
   <license>TODO: License declaration</license>
 
+  <exec_depend>my_service_interfaces</exec_depend>
+  <exec_depend>rclpy</exec_depend>
+
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>
