@@ -19,7 +19,8 @@ setup(
     license='TODO: License declaration',
     entry_points={
         'console_scripts': [
-		'turtle_mover = my_turtle_controller.turtle_mover:main'
+		'turtle_mover = my_turtle_controller.turtle_mover:main',
+		'turtle_figure8 = my_turtle_controller.turtle_figure8:main',
         ],
     },
 )
