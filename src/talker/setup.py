@@ -17,9 +17,9 @@ setup(
     maintainer_email='93276404+EvgeniyGA@users.noreply.github.com',
     description='TODO: Package description',
     license='TODO: License declaration',
-    tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+		'talker = talker.talker_node:main',
         ],
     },
 )
