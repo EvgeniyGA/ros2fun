@@ -3,28 +3,43 @@ import rclpy
 from rclpy.node import Node
 from rclpy.action import ActionClient
 
+
 # Наш action
 from my_action_interface.action import SummCalculate
+from my_custom_interface.msg import Numbers
 
 class SummCalculateActionClient(Node):
-    def __init__(self, a, b):
+    def __init__(self):
         super().__init__('summ_calculate_action_client')
         self._action_client = ActionClient(self, SummCalculate, 'summ_calculate')
         self._goal_handle = None
-        self._a = a
-        self._b = b
+        self._subscription = self.create_subscription(
+            Numbers,
+            'numbers_topic',
+            self.numbers_callback,
+            10
+        )
+        self.get_logger().info('SummCalculateActionClient запущен!')
 
-    def send_goal(self):
+    def numbers_callback(self, msg):
+        """
+        Обработчик сообщений из топика numbers_topic.
+        """
+        a = msg.a
+        b = msg.b
+        self.send_goal(a, b)
+
+    def send_goal(self, a, b):
         """
         Отправка goal: считаем сумму от self._a до self._b.
         """
         goal_msg = SummCalculate.Goal()
-        goal_msg.a = self._a
-        goal_msg.b = self._b
+        goal_msg.a = a
+        goal_msg.b = b
 
         # Ждём доступности сервера
         self._action_client.wait_for_server()
-        self.get_logger().info(f"Отправляем goal (a={self._a}, b={self._b})...")
+        self.get_logger().info(f"Отправляем goal (a={a}, b={b})...")
 
         # Асинхронная отправка
         send_goal_future = self._action_client.send_goal_async(
@@ -71,20 +86,13 @@ class SummCalculateActionClient(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-
-    # Устанавливаем значения a и b для вычисления
-    a = 1
-    b = 100
-
-    client = SummCalculateActionClient(a, b)
-    client.send_goal()
-
+    node = SummCalculateActionClient()
     try:
         rclpy.spin(client)  # Обработка всех колбэков
     except KeyboardInterrupt:
-        client.get_logger().info("Остановка по Ctrl+C")
+        node.get_logger().info("Остановка сервера по Ctrl+C")
     finally:
-        client.destroy_node()
+        node.destroy_node()
         rclpy.shutdown()
 
 
