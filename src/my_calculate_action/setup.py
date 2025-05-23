@@ -17,9 +17,10 @@ setup(
     maintainer_email='93276404+EvgeniyGA@users.noreply.github.com',
     description='TODO: Package description',
     license='TODO: License declaration',
-    tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+		'calculate_action_server = my_calculate_action.calculate_action_server:main',
+            	'calculate_action_client = my_calculate_action.calculate_action_client:main',
         ],
     },
 )
