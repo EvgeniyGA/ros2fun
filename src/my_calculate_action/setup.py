@@ -21,6 +21,7 @@ setup(
         'console_scripts': [
 		'calculate_action_server = my_calculate_action.calculate_action_server:main',
             	'calculate_action_client = my_calculate_action.calculate_action_client:main',
+		'number_publisher = my_calculate_action.publisher_node:main',
         ],
     },
 )
