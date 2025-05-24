@@ -88,7 +88,7 @@ def main(args=None):
     rclpy.init(args=args)
     node = SummCalculateActionClient()
     try:
-        rclpy.spin(client)  # Обработка всех колбэков
+        rclpy.spin(node)  # Обработка всех колбэков
     except KeyboardInterrupt:
         node.get_logger().info("Остановка сервера по Ctrl+C")
     finally:
